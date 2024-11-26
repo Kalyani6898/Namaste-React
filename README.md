@@ -19,3 +19,20 @@
 -Diagnostics( beautiful error)
 -Error Handling
 -Tree Shaking
+
+Default exports/import
+
+default export -
+ export default <variable_name>
+ import <variable_name> from '..path'
+
+ name export 
+ export const <variable_name>/Component
+ import {variable_name} from '..path'
+
+
+
+ #React hooks
+ -they are normal js utility functions
+ -useState() super powerul state variable in react 
+ -use effect
