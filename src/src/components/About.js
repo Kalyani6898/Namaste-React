@@ -1,10 +1,16 @@
-const About =()=>{
-    return(
-        <div>
-            <h1>Hello</h1>
-            <h2>Thi is namaste react web series</h2>
-        </div>
-    )
-    
+import User from "./User";
+import UserClass from "./UserClass";
+const About = () => {
+  return (
+    <div>
+      {/* <User name={"Kalyani"} location={"Pune"} /> */}
+      <UserClass name={"Kalyani"} location={"Pune"} />
+    </div>
+  );
 };
 export default About;
+
+/*  
+Parebt constructor
+
+*/

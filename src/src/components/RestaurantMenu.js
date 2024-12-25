@@ -1,55 +1,43 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Shimmer from "./Shimmer";
+import { useParams } from "react-router-dom";
+import useRestauratMenu from "../../utils/useRestauratMenu";
+import RestaurantCategory from "./RestaurantCategories";
 
 const RestaurantMenu = () => {
-  const [restaurantMenu, setRestaurentMenu] = useState([]);
-  useEffect(() => {
-    fetchDataRes();
-  }, []);
-  async function fetchDataRes() {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.61610&lng=73.72860&restaurantId=14780&catalog_qa=undefined&submitAction=ENTER"
-      //      "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.61610&lng=73.72860&restaurantId=105258&catalog_qa=undefined&isMenuUx4=true&submitAction=ENTER"
-    );
-    const json = await data.json();
-    console.log(json.data);
-    setRestaurentMenu(json.data);
-  }
-  //console.log(restaurantMenu.cards[2]);
-  const { name, cuisines, costForTwoMessage, avgRating } = restaurantMenu;
-  console.log(restaurantMenu);
-  if (restaurantMenu === null) {
+  const { resId } = useParams();
+  const resInfo = useRestauratMenu(resId);
+  const [showIndex, setShowIndex] = useState();
+  if (resId === null) {
     return <Shimmer />;
   }
+  const { name, cuisines, costForTwoMessage, avgRating } =
+    resInfo.data.cards[2].card.card.info; // use cards[2]
+  const { itemCards } =
+    resInfo.data.cards[0].groupedCard.cardGroupMap.REGULAR.cards[1].card.card; //cards[4]
+  const categories =
+    resInfo.data.cards[0].groupedCard.cardGroupMap.REGULAR.cards.filter(
+      (f) =>
+        f.card.card["@type"] ===
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
   return (
-    <div className="menu">
-      {/* <h1>{name}</h1>
-      <h3>{cuisines}</h3>
-      <h3>{costForTwoMessage}</h3>
-      <h3>{avgRating}</h3> */}
-      <h1>Menu</h1>
-      <ul>
-        <li>Biryani</li>
-        <li>Dessert</li>
-        <li>Diet coke</li>
-      </ul>
+    <div className="text-center">
+      <h1 className="font-bold my-6 text-2xl">{name}</h1>
+      <p className="font-bold text-lg">{cuisines.join(", ")}</p>
+      {categories.map((category, index) => (
+        //controlled component
+        <RestaurantCategory
+          data={category.card.card}
+          key={category.card.card.itemCards[0].card.info.id}
+          showItem={index === showIndex ? true : false}
+          setShowIndex={() => {
+            setShowIndex(index);
+          }}
+        />
+      ))}
     </div>
   );
 };
 
 export default RestaurantMenu;
-
-// import React, { useEffect } from "react";
-
-// const RestaurantMenu = () => {
-//   useEffect(async () => {
-//     const data = await fetch(
-//       "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.61610&lng=73.72860&restaurantId=14780&catalog_qa=undefined&submitAction=ENTER"
-//     );
-//     const json = await data.json();
-//     console.log(json.data);
-//   },[]);
-//   return <div>RestaurantMenu</div>;
-// };
-
-// export default RestaurantMenu;

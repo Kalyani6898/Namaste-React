@@ -1,13 +1,12 @@
 #Namaste React
 
-
 #Parcel
 -Dev Build
--Local Server 
--Automatically refreshing web page 
+-Local Server
+-Automatically refreshing web page
 -HMR(Hot module replacement)
 -File watching algo -written in c++
--Cashing -Faster build 
+-Cashing -Faster build
 -Image optimization
 -Minification
 -Bundle
@@ -23,16 +22,19 @@
 Default exports/import
 
 default export -
- export default <variable_name>
- import <variable_name> from '..path'
+export default <variable_name>
+import <variable_name> from '..path'
 
- name export 
- export const <variable_name>/Component
- import {variable_name} from '..path'
+name export
+export const <variable_name>/Component
+import {variable_name} from '..path'
 
+#React hooks
+-they are normal js utility functions
+-useState() super powerul state variable in react
+-use effect
 
+# 2 types of routing in react
 
- #React hooks
- -they are normal js utility functions
- -useState() super powerul state variable in react 
- -use effect
+- Client side routing
+  -Server side routing

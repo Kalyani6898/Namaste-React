@@ -1,4 +1,4 @@
-import React from "react";
+import { React, lazy, Suspense, useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./src/components/Header";
 import Body from "./src/components/Body.js";
@@ -7,6 +7,7 @@ import About from "./src/components/About.js";
 import Contact from "./src/components/ContactUs.js";
 import Error from "./src/components/Error.js";
 import RestaurantMenu from "./src/components/RestaurantMenu";
+import UserContext from "./utils/UserContext.js";
 
 // const heading = React.createElement("div", { id: "parent", xyz: "abc" }, [
 //   React.createElement("div", { id: "child1" }, [
@@ -83,12 +84,25 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // you can pass argument in component in this way as well <RestrauntCard name="KFC" cuisines="Chicken Bucket" rating="4 stars" time="48 mins"></RestrauntCard>
 
+const Grocerys = lazy(() => import("./src/components/Grocery.js"));
+const About = lazy(() => import("./src/components/About.js"));
 const AppLayout = () => {
+  const [userInfo, setUserInfo] = useState();
+  useEffect(() => {
+    const data = {
+      name: "Kalyani",
+    };
+    setUserInfo(data.name);
+  }, []);
   return (
-    <div className="app">
-      {<Header></Header>}
-      <Outlet />
-    </div>
+    <UserContext.Provider value={{ loggedInUser: userInfo, setUserInfo }}>
+      <div className="app">
+        <UserContext.Provider value={{ loggedInUser: "Elon" }}>
+          <Header></Header>
+        </UserContext.Provider>
+        <Outlet />
+      </div>
+    </UserContext.Provider>
   );
 };
 const appRoute = createBrowserRouter([
@@ -97,10 +111,25 @@ const appRoute = createBrowserRouter([
     element: <AppLayout></AppLayout>,
     errorElement: <Error />,
     children: [
-      { path: "/about", element: <About /> },
+      {
+        path: "/about",
+        element: (
+          <Suspense fallback={<h1> Loading</h1>}>
+            <About />
+          </Suspense>
+        ),
+      },
       { path: "/contactus", element: <Contact /> },
       { path: "/", element: <Body /> },
-      {path :"/restaurants/:resId", element : <RestaurantMenu/>}
+      { path: "/restaurants/:resId", element: <RestaurantMenu /> },
+      {
+        path: "/grocery",
+        element: (
+          <Suspense fallback={<h1> Loading</h1>}>
+            <Grocerys />
+          </Suspense>
+        ),
+      },
     ],
   },
 ]);
