@@ -4,7 +4,7 @@ import { MENU_URL, RestaurantMenuJson } from "./constant";
 const useRestauratMenu = (resId) => {
   const [resInfo, setResInfo] = useState(RestaurantMenuJson);
 
-  //=================Commented becoz of API issue==================
+  //================= Commented bcoz of API issue ==================
 
   /*const [resInfo, setResInfo] = useState(null);
   useEffect(() => {
@@ -16,7 +16,7 @@ const useRestauratMenu = (resId) => {
     setResInfo(json);
   }
 */
-  //=========================  MOck Data Used Due To Api issue  ================
+  //========================= Mock Data Used Due To Api issue ================
 
   return resInfo;
 };

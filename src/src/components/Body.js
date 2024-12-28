@@ -5,6 +5,8 @@ import Shimmer from "./Shimmer";
 import { Json } from "../../utils/constant";
 import useOnlineStatus from "../../utils/useOnlineStatus";
 import UserContext from "../../utils/UserContext";
+import { useDispatch, useSelector } from "react-redux";
+import { addList } from "../../utils/searchSlice";
 const Body = () => {
   const onlineStatus = useOnlineStatus();
   //==================commented due to api facing issue======================
@@ -21,7 +23,7 @@ const Body = () => {
   //   const data = await fetch(
   //     "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.11610&lng=79.07060&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
   //   );
-  //   const json = await data();
+  //   const json = await data.json();
   //   console.log(json);
   //   setListOfRestaurant(
   //     arr?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
@@ -35,6 +37,11 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
   const { loggedInUser, setUserInfo } = useContext(UserContext);
   const RestaurantCardPromoted = withPromotedLabel(RestrauntCard);
+  const searchList = useSelector((store) => store.search.searchList);
+  const dispatch = useDispatch();
+  const handleSearch = () => {
+    dispatch(addList("Pizza"));
+  };
   const [listOfRestaurant, setListOfRestaurant] = useState(
     Json.data?.cards[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants
   );

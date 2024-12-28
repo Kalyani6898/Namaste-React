@@ -38,3 +38,11 @@ import {variable_name} from '..path'
 
 - Client side routing
   -Server side routing
+
+# Redux ToolKit
+
+-Install @reduxjs/toolkit
+-Build store
+-Connect our store to app
+-Create slice
+-Dispatch action

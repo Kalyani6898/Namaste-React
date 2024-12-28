@@ -29,9 +29,11 @@
     "util": "^0.12.5"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
     "node": "^18.17.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^6.22.3"
   },
   "browserslist": [

@@ -8,6 +8,9 @@ import Contact from "./src/components/ContactUs.js";
 import Error from "./src/components/Error.js";
 import RestaurantMenu from "./src/components/RestaurantMenu";
 import UserContext from "./utils/UserContext.js";
+import Cart from "./src/components/Cart.js";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore.js";
 
 // const heading = React.createElement("div", { id: "parent", xyz: "abc" }, [
 //   React.createElement("div", { id: "child1" }, [
@@ -95,14 +98,14 @@ const AppLayout = () => {
     setUserInfo(data.name);
   }, []);
   return (
-    <UserContext.Provider value={{ loggedInUser: userInfo, setUserInfo }}>
-      <div className="app">
-        <UserContext.Provider value={{ loggedInUser: "Elon" }}>
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ loggedInUser: userInfo, setUserInfo }}>
+        <div className="app">
           <Header></Header>
-        </UserContext.Provider>
-        <Outlet />
-      </div>
-    </UserContext.Provider>
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 const appRoute = createBrowserRouter([
@@ -120,6 +123,7 @@ const appRoute = createBrowserRouter([
         ),
       },
       { path: "/contactus", element: <Contact /> },
+      { path: "/cart", element: <Cart /> },
       { path: "/", element: <Body /> },
       { path: "/restaurants/:resId", element: <RestaurantMenu /> },
       {
